@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>User Detail</title>
+</head>
+<body>
+      <h1>User Detail</h1>
+      <div th:each="user : ${userlists}">
+             User Name : <span th:text="${user.userName}"></span><br>
+             Phone Number : <span th:text="${user.phoneNumber}"></span><br>
+             Gender : <span th:text="${user.gender}"></span><br>
+             Married : <span th:text="${user.married}"></span><br>
+             City : <span th:text="${user.city}"></span><br>
+          <hr>
+      </div>
+        <a th:href="@{/user/create}">Register Page</a>
+</body>
+</html>
