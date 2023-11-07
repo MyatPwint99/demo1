@@ -94,5 +94,51 @@ public class HomeController {
 
         return "user/detail";
     }
+//    @GetMapping("/user/profile/{userId}")
+//    public String getUser(Model model , @PathVariable() Long userId){
+//        var myUser = new MyUser();
+//        myUser.setUserName("Fake name");
+//        myUser.setPhoneNumber(124456);
+//        try{
+//            var myUser = myUserRepository.findById(userId).get();
+//            model.addAttribute("user",myUser);
+//        }catch (Exception e){
+//            model.addAttribute("error","There is no User.");
+//        }
+//        return "user/profile";
+//    }
+    // Select By City
+    @GetMapping("/user/profile")
+    public String getUser(Model model){
+        List<MyUser> userList = myUserRepository.findByCity("Mandalay");
+        model.addAttribute("userlists",userList);
+        return "user/profile";
+    }
+    @GetMapping("/user/edit/{userId}")
+    public String editUser(Model model , @PathVariable Long userId){
+//        var user = new MyUser();
+        MyUser user = myUserRepository.findById(userId).get();
+        List<String> cities = new ArrayList<>();
+        cities.add("Yangon");
+        cities.add("Mandalay");
+        cities.add("Bagan");
+        model.addAttribute("user",user);
+        model.addAttribute("cities",cities);
+        return "user/edit";
+    }
+    @PostMapping("/user/edit")
+    public String editUser(@ModelAttribute MyUser user, Model model){
+        myUserRepository.save(user);
+        return "user/profile";
 
+    }
+    @GetMapping("/user/delete/{userId}")
+    public String deleteUser(@PathVariable Long userId){
+//        myUserRepository.deleteById(userId);
+
+        var user = myUserRepository.findById(userId).get();
+        myUserRepository.delete(user);
+
+        return "user/profile";
+    }
 }
